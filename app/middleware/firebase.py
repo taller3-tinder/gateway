@@ -14,7 +14,8 @@ security = HTTPBearer()
 
 async def get_current_user(token: Annotated[str, Depends(security)]):
     user = auth.verify_id_token(token.credentials)
+    print(user)
     if user:
-        return user["uid"]
+        return user
     else:
         raise HTTPException(status_code=401, detail="Invalid token")
