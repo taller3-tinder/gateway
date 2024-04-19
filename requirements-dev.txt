@@ -3,3 +3,5 @@ uvicorn
 pytest
 pytest-cov
 httpx
+starlette
+firebase-admin
