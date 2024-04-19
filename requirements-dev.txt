@@ -3,3 +3,4 @@ uvicorn
 pytest
 pytest-cov
 firebase-admin
+python-dotenv
