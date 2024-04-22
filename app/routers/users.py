@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from ..middleware.firebase import get_current_user
-from ..schemas.users import RegisterUser
+from tinderlibs.schemas.users import RegisterUser
 from fastapi.encoders import jsonable_encoder
 import requests
 
@@ -14,7 +14,7 @@ router = APIRouter(
     tags=['Users'],
     dependencies=[Depends(get_current_user)]
     # En los metodos que se necesita el current user,
-    # el resultado es cacheado y no se vuelve a llamar 
+    # el resultado es cacheado y no se vuelve a llamar
     # a este metodo.
 )
 

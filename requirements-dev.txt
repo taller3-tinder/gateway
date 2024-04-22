@@ -4,3 +4,4 @@ pytest
 pytest-cov
 firebase-admin
 python-dotenv
+git+https://github.com/taller3-tinder/tinderlibs.git
