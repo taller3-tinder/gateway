@@ -4,7 +4,7 @@ import os
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 import requests
-from gateway.app.middleware.firebase import get_current_user
+from ..middleware.firebase import get_current_user
 from tinderlibs.schemas.swipes import UserSwipe
 from fastapi.encoders import jsonable_encoder
 
