@@ -11,7 +11,7 @@ permissions:
       id-token: write
       contents: read
 jobs:
-  AssumeRoleAndCallIdentity:
+  PushDockerImageToECR:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -22,6 +22,17 @@ jobs:
           role-to-assume: arn:aws:iam::851725587887:role/GithubActions-Taller3
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      - name: Sts GetCallerIdentity
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      # Se podria hacer algo para pushear con algun tag, 
+      # pero por temas de memoria en ECR pusheamos siempre con el tag latest.
+      - name: Build, tag, and push the image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
+          IMAGE_TAG: latest
         run: |
-          aws sts get-caller-identity
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
