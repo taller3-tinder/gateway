@@ -24,15 +24,18 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
       # Se podria hacer algo para pushear con algun tag, 
       # pero por temas de memoria en ECR pusheamos siempre con el tag latest.
-      - name: Build, tag, and push the image to Amazon ECR
+      - name: Build, tag, and push the image to Amazon ECR Public
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: tinder-gateway
+          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+          REGISTRY_ALIAS: q1r8t3l6
+          REPOSITORY: tinder-gateway
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
