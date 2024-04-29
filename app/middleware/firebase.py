@@ -3,9 +3,12 @@ from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer
 import firebase_admin
 from firebase_admin import credentials, auth
+import json
+from dotenv import load_dotenv
+import os
 
-
-cred = credentials.Certificate("firebasekey.json")
+firebasekey = json.loads(os.getenv("FIREBASEKEY"))
+cred = credentials.Certificate(firebasekey)
 
 firebase = firebase_admin.initialize_app(cred)
 
