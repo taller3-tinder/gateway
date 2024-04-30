@@ -7,6 +7,8 @@ import json
 from dotenv import load_dotenv
 import os
 
+
+load_dotenv()
 firebasekey = json.loads(os.getenv("FIREBASE_KEY"))
 cred = credentials.Certificate(firebasekey)
 
