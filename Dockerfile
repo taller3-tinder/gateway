@@ -1,15 +1,16 @@
-FROM python:3.11-slim
+FROM python:3.11-alpine
 
 WORKDIR /code
 
-RUN apt-get update && apt-get install -y git
+RUN apk update && \
+    apk add --no-cache git && \
+    rm -rf /var/cache/apk/*
 
 COPY ./requirements.txt /code/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r  /code/requirements.txt && \
-    rm -rf /root/.cache /var/lib/apt/lists/* /tmp/*
-
-RUN apt-get remove -y git && apt-get autoremove -y
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt && \
+    rm -rf /root/.cache && \
+    apk del git
 
 COPY ./app /code/app
 
