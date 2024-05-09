@@ -6,6 +6,7 @@ services:
       - PORT=12347
       - USERS_URL=http://users:12346
       - SWIPES_URL=http://swipes:12345
+      - RECOMMENDATIONS_URL=http://recommendations:12349
       - FIREBASE_KEY=${FIREBASE_KEY}
     ports:
       - "12347:12347"
@@ -18,3 +19,4 @@ services:
 networks:
   tinder-dev-network:
     name: tinder-dev-network
+    external: true
