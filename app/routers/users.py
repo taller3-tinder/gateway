@@ -32,7 +32,7 @@ def join_attributes(user_schema, current_user):
 @router.get('/{user_id}')
 def find_user(user_id: str,
               current_user: Annotated[dict, Depends(get_current_user)]):
-    resp = requests.get(f"{USERS_URL}/users/{user_id}/{current_user['uid']}")
+    resp = requests.get(f"{USERS_URL}/users/{user_id}")
     return JSONResponse(content=resp.json(), status_code=resp.status_code)
 
 
